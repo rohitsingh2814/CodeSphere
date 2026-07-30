@@ -1,5 +1,7 @@
 import express from "express";
 import path from "path";
+
+import fs from "fs";
 import { ENV } from "./lib/env.js";
 
 const app = express();
@@ -8,7 +10,8 @@ const root = path.resolve();
 const frontendPath = path.join(root, "Frontend", "dist");
 
 
-
+const root = path.resolve();
+const frontendPath = path.join(root, "Frontend", "dist");
 
 console.log("Root:", root);
 console.log("Frontend Path:", frontendPath);
