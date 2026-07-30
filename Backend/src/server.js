@@ -1,18 +1,17 @@
 import express from "express";
 import path from "path";
-
 import fs from "fs";
+import {connectDB} from './lib/db.js';
 import { ENV } from "./lib/env.js";
+
 
 const app = express();
 
 const root = path.resolve();
 
 const frontendPath = path.join(process.cwd(), "..", "Frontend", "dist");
+console.log(process.cwd());
 
-console.log("CWD:", process.cwd());
-console.log("Frontend:", frontendPath);
-console.log("Exists:", fs.existsSync(frontendPath));
 const PORT = ENV.PORT || 3000;
 
 app.get("/health", (req, res) => {
@@ -27,6 +26,19 @@ if (ENV.NODE_ENV === "production") {
     });
 }
 
-app.listen(PORT, () => {
-    console.log(`Server running on ${PORT}`);
-});
+
+
+const startServer=async ()=>{
+    try{
+        connectDB();
+        app.listen(PORT, () => {
+            console.log(`Server running on ${PORT}`);
+        });
+    }catch(error){
+        console.log("💥 Error in starting Server" ,error);
+    }
+
+
+}
+
+startServer();
