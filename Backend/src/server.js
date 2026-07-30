@@ -3,22 +3,24 @@ import path from "path";
 import { ENV } from "./lib/env.js";
 
 const app = express();
-const __dirname = path.resolve();
+
+const root = path.resolve();
+const frontendPath = path.join(root, "Frontend", "dist");
 
 const PORT = ENV.PORT || 3000;
 
 app.get("/health", (req, res) => {
-    res.status(200).json({ msg: "Success from backend" });
+    res.json({ msg: "Success from backend" });
 });
 
 if (ENV.NODE_ENV === "production") {
-    app.use(express.static(path.join(__dirname, "../../frontend/dist")));
+    app.use(express.static(frontendPath));
 
     app.get("/{*any}", (req, res) => {
-        res.sendFile(path.join(__dirname, "../../frontend/dist/index.html"));
+        res.sendFile(path.join(frontendPath, "index.html"));
     });
 }
 
 app.listen(PORT, () => {
-    console.log(`Server is running on ${PORT}`);
+    console.log(`Server running on ${PORT}`);
 });
