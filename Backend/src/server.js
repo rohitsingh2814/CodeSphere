@@ -7,8 +7,8 @@ import { ENV } from "./lib/env.js";
 const app = express();
 
 const root = path.resolve();
-const frontendPath = path.join(root, "Frontend", "dist");
 
+const frontendPath = path.resolve(__dirname, "../../Frontend/dist");
 
 
 console.log("Root:", root);
