@@ -7,6 +7,13 @@ const app = express();
 const root = path.resolve();
 const frontendPath = path.join(root, "Frontend", "dist");
 
+
+
+
+console.log("Root:", root);
+console.log("Frontend Path:", frontendPath);
+console.log("Exists:", fs.existsSync(frontendPath));
+
 const PORT = ENV.PORT || 3000;
 
 app.get("/health", (req, res) => {
