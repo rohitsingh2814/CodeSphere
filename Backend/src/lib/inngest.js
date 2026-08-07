@@ -7,22 +7,20 @@ export const inngest =new Inngest({id :"CodeSphere"});
 const syncUser =inngest.createFunction(
     {
     id: "sync-user",
-    triggers: [
-      {
-        event: "clerk/user.created",
-      },
-    ],
+    triggers: {
+  event: "clerk/user.created",
+},
   },
     async ({event})=>{
         await connectDB()
 
-        const {id,email_address,first_name,last_name,image_url}=event.data
+        const {id,email_addresses,first_name,family_name,image_url}=event.data
         
 
         const newUser={
-            clerKId :id,
-            email:email_address[0]?.email_address,
-            name: `${first_name || ""} ${last_name || ""}`,
+            clerkId :id,
+            email:email_addresses[0]?.email_address,
+            name: `${first_name || ""} ${family_name || ""}`,
             profileImage:image_url
 
         }
@@ -37,11 +35,9 @@ const syncUser =inngest.createFunction(
 const deleteUserFromDB =inngest.createFunction(
     {
     id: "delete-user-from-db",
-    triggers: [
-      {
-        event: "clerk/user.deleted",
-      },
-    ],
+   triggers: {
+  event: "clerk/user.deleted",
+},
   },
     async ({event})=>{
         await connectDB()
